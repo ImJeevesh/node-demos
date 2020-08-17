@@ -1,6 +1,6 @@
-import { UserSchemaExtract } from './../models/user.model';
 import { ValidatedRequestSchema, ContainerTypes, createValidator } from 'express-joi-validation';
 import Joi from '@hapi/joi';
+import { UserSchemaExtract } from '../models/user.model';
 
 export const userSchema = Joi.object({
   login: Joi.string().required(),

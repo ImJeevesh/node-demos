@@ -1,6 +1,14 @@
-import { userRoutes } from './routes/user.route';
+import { dbConfig } from './data-access/db.config';
+import { userRoutes } from './routers/user.router';
 import express, { Request, Response, NextFunction } from 'express';
 import { ExpressJoiError } from 'express-joi-validation';
+
+dbConfig
+  .sync()
+  .then(() => console.log('Connected to DB'))
+  .catch((reason) => {
+    throw `DB connection error: ${reason}`;
+  });
 
 export const PORT = process.env.PORT || 4000;
 export const app = express();
