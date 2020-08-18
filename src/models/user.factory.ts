@@ -1,5 +1,4 @@
-import { UserStatic } from './user.model';
-import { UserInstance } from './user.model';
+import { UserInstance, UserStatic } from './user.model';
 import { UUIDV4, DataTypes, Sequelize } from 'sequelize';
 
 export function UserFactory(sequelize: Sequelize): UserStatic {

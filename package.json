@@ -6,10 +6,10 @@
   "scripts": {
     "tsc": "tsc",
     "lint": "npx eslint . --ext .js,.ts",
-    "serve:dist": "nodemon dist/server.js",
     "prebuild": "npm run lint",
-    "build:dev": "tsc --watch --preserveWatchOutput",
-    "start": "concurrently \"npm:build:dev\" \"npm:serve:dist\""
+    "build": "tsc",
+    "serve:build": "node dist/server.js",
+    "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "concurrently": "^5.2.0",
     "eslint": "^7.5.0",
     "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   },
   "dependencies": {
