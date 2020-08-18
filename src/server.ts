@@ -1,3 +1,4 @@
+import { groupRoutes } from './routers/group.router';
 import { dbConfig } from './data-access/db.config';
 import { userRoutes } from './routers/user.router';
 import express, { Request, Response, NextFunction } from 'express';
@@ -16,6 +17,7 @@ export const app = express();
 app.use(express.json());
 
 app.use('/user', userRoutes);
+app.use('/group', groupRoutes);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 app.use((error: ExpressJoiError | any, _req: Request, res: Response, next: NextFunction) => {

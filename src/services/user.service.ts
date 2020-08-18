@@ -1,6 +1,7 @@
-import { User } from './../data-access/index';
+import { User, UserGroup } from './../data-access/index';
 import { UserInstance, UserSchemaExtract } from '../models/user.model';
-import { Op } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
+import 'express-async-errors'; // acts as global try catch
 
 export class UserService {
   async getUsers(limit: number): Promise<UserInstance[]> {
@@ -9,6 +10,19 @@ export class UserService {
         isDeleted: false
       },
       limit
+    });
+  }
+
+  async getUsersWithIds(ids: string[], transaction: Transaction | null = null): Promise<UserInstance[]> {
+    // return await User.findByPk(id);
+    return await User.findAll({
+      where: {
+        id: {
+          [Op.in]: ids
+        },
+        isDeleted: false
+      },
+      ...(transaction ? { transaction } : {})
     });
   }
 
@@ -38,6 +52,12 @@ export class UserService {
   }
 
   async deleteUser(id: string): Promise<UserInstance | undefined> {
+    // destroy existing relations
+    await UserGroup.destroy({
+      where: {
+        userId: id
+      }
+    });
     const [, user] = await User.update(<UserInstance>{
       isDeleted: true
     }, {
